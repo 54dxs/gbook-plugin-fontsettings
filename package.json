@@ -1,0 +1,65 @@
+{
+  "name": "gbook-plugin-fontsettings",
+  "version": "1.0.1",
+  "description": "设置网站的字体和颜色主题以获得更好的阅读体验",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "lessc ./less/website.less > ./assets/website.css;"
+  },
+  "engines": {
+    "gbook": ">=1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^2.7.0",
+    "less": "2.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/54dxs/gbook-plugin-fontsettings.git"
+  },
+  "gbook": {
+    "properties": {
+      "theme": {
+        "type": "string",
+        "default": "white",
+        "title": "Default theme",
+        "enum": [
+          "white",
+          "sepia",
+          "night"
+        ]
+      },
+      "family": {
+        "type": "string",
+        "default": "sans",
+        "title": "Default font family",
+        "enum": [
+          "sans",
+          "serif"
+        ]
+      },
+      "size": {
+        "type": "number",
+        "default": 2,
+        "title": "Default font size",
+        "min": 1,
+        "max": 4
+      }
+    }
+  },
+  "author": {
+    "name": "54大学生",
+    "email": "374452668@qq.com"
+  },
+  "contributors": [
+    {
+      "name": "深情小建",
+      "email": "374452668@qq.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/54dxs/gbook-plugin-fontsettings/issues"
+  },
+  "homepage": "https://github.com/54dxs/gbook-plugin-fontsettings#readme"
+}
