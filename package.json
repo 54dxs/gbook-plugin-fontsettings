@@ -1,10 +1,10 @@
 {
   "name": "gbook-plugin-fontsettings",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "设置网站的字体和颜色主题以获得更好的阅读体验",
   "main": "index.js",
   "scripts": {
-    "prepublish": "lessc ./less/website.less > ./assets/website.css;"
+    "-prepublish": "lessc ./less/website.less > ./assets/website.css;"
   },
   "engines": {
     "gbook": ">=1.0.0"
