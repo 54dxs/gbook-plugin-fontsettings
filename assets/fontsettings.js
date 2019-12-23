@@ -1,13 +1,13 @@
 require(['gbook', 'jquery'], function(gbook, $) {
-    // Configuration
+    // 配置
     var MAX_SIZE       = 4,
         MIN_SIZE       = 0,
         BUTTON_ID;
 
-    // Current fontsettings state
+    // 当前字体设置状态
     var fontState;
 
-    // Default themes
+    // 默认主题
     var THEMES = [
         {
             config: 'white',
@@ -26,7 +26,7 @@ require(['gbook', 'jquery'], function(gbook, $) {
         }
     ];
 
-    // Default font families
+    // 默认字体系列
     var FAMILIES = [
         {
             config: 'serif',
@@ -40,35 +40,35 @@ require(['gbook', 'jquery'], function(gbook, $) {
         }
     ];
 
-    // Return configured themes
+    // 获取主题的配置信息
     function getThemes() {
         return THEMES;
     }
 
-    // Modify configured themes
+    // 设置主题的配置信息
     function setThemes(themes) {
         THEMES = themes;
         updateButtons();
     }
 
-    // Return configured font families
+    // 获取字体配置信息
     function getFamilies() {
         return FAMILIES;
     }
 
-    // Modify configured font families
+    // 设置字体配置信息
     function setFamilies(families) {
         FAMILIES = families;
         updateButtons();
     }
 
-    // Save current font settings
+    // 保存当前字体设置
     function saveFontSettings() {
         gbook.storage.set('fontState', fontState);
         update();
     }
 
-    // Increase font size
+    // 放大页面字体大小
     function enlargeFontSize(e) {
         e.preventDefault();
         if (fontState.size >= MAX_SIZE) return;
@@ -77,7 +77,7 @@ require(['gbook', 'jquery'], function(gbook, $) {
         saveFontSettings();
     }
 
-    // Decrease font size
+    // 缩小页面字体大小
     function reduceFontSize(e) {
         e.preventDefault();
         if (fontState.size <= MIN_SIZE) return;
@@ -86,7 +86,7 @@ require(['gbook', 'jquery'], function(gbook, $) {
         saveFontSettings();
     }
 
-    // Change font family
+    // 修改字体
     function changeFontFamily(configName, e) {
         if (e && e instanceof Event) {
             e.preventDefault();
@@ -97,7 +97,7 @@ require(['gbook', 'jquery'], function(gbook, $) {
         saveFontSettings();
     }
 
-    // Change type of color theme
+    // 更改颜色主题的类型
     function changeColorTheme(configName, e) {
         if (e && e instanceof Event) {
             e.preventDefault();
@@ -105,11 +105,11 @@ require(['gbook', 'jquery'], function(gbook, $) {
 
         var $book = gbook.state.$book;
 
-        // Remove currently applied color theme
+        // 删除当前应用的颜色主题
         if (fontState.theme !== 0)
             $book.removeClass('color-theme-'+fontState.theme);
 
-        // Set new color theme
+        // 设置新颜色主题
         var themeId = getThemeId(configName);
         fontState.theme = themeId;
         if (fontState.theme !== 0)
@@ -118,25 +118,25 @@ require(['gbook', 'jquery'], function(gbook, $) {
         saveFontSettings();
     }
 
-    // Return the correct id for a font-family config key
-    // Default to first font-family
+    // 返回字体系列配置键的正确id
+	// 默认为第一个字体系列
     function getFontFamilyId(configName) {
-        // Search for plugin configured font family
+        // 搜索插件配置的字体系列
         var configFamily = $.grep(FAMILIES, function(family) {
             return family.config == configName;
         })[0];
-        // Fallback to default font family
+        // 回退到默认字体系列
         return (!!configFamily)? configFamily.id : 0;
     }
 
-    // Return the correct id for a theme config key
-    // Default to first theme
+    // 返回主题配置键的正确id
+    // 默认为第一个主题
     function getThemeId(configName) {
-        // Search for plugin configured theme
+        // 搜索插件配置的主题
         var configTheme = $.grep(THEMES, function(theme) {
             return theme.config == configName;
         })[0];
-        // Fallback to default theme
+        // 回退到默认主题
         return (!!configTheme)? configTheme.id : 0;
     }
 
@@ -157,11 +157,11 @@ require(['gbook', 'jquery'], function(gbook, $) {
     }
 
     function init(config) {
-        // Search for plugin configured font family
+        // 搜索插件配置的字体系列
         var configFamily = getFontFamilyId(config.family),
             configTheme = getThemeId(config.theme);
 
-        // Instantiate font state object
+        // 实例化字体状态对象
         fontState = gbook.storage.get('fontState', {
             size:   config.size || 2,
             family: configFamily,
@@ -172,12 +172,12 @@ require(['gbook', 'jquery'], function(gbook, $) {
     }
 
     function updateButtons() {
-        // Remove existing fontsettings buttons
+        // 删除现有的FunSt设置按钮
         if (!!BUTTON_ID) {
             gbook.toolbar.removeButton(BUTTON_ID);
         }
 
-        // Create buttons in toolbar
+        // 在工具栏中创建按钮
         BUTTON_ID = gbook.toolbar.createButton({
             icon: 'fa fa-font',
             label: 'Font Settings',
@@ -213,18 +213,18 @@ require(['gbook', 'jquery'], function(gbook, $) {
         });
     }
 
-    // Init configuration at start
+    // 启动时初始化配置
     gbook.events.bind('start', function(e, config) {
         var opts = config.fontsettings;
 
-        // Generate buttons at start
+        // 开始时生成按钮
         updateButtons();
 
-        // Init current settings
+        // 初始化当前设置
         init(opts);
     });
 
-    // Expose API
+    // 导出 API
     gbook.fontsettings = {
         enlargeFontSize: enlargeFontSize,
         reduceFontSize:  reduceFontSize,
